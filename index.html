@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f1eb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1f1e1d" media="(prefers-color-scheme: dark)" />
+    <title>Clawd 表情包聚合器</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("clawdTheme");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored || (prefersDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Clawd 表情包导航">
+        <div class="brand-lockup">
+          <img
+            class="brand-crab"
+            src="https://clawdmascot.com/public/images/clawd.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <div>
+            <p class="eyebrow">Claude Code · Mascot</p>
+            <h1>Clawd 表情包聚合器</h1>
+          </div>
+        </div>
+
+        <nav class="tabs" aria-label="主要区域">
+          <button class="tab-button is-active" type="button" data-tab="wall">表情墙</button>
+          <button class="tab-button" type="button" data-tab="sources">来源</button>
+          <button class="tab-button" type="button" data-tab="pack">我的包 <span id="packCount">0</span></button>
+        </nav>
+
+        <button
+          class="theme-toggle"
+          type="button"
+          id="themeToggle"
+          aria-label="切换主题"
+        >
+          <svg
+            class="theme-icon"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="8" cy="8" r="3.2" />
+            <path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1" />
+          </svg>
+          <span id="themeToggleLabel">浅色模式</span>
+        </button>
+
+      </aside>
+
+      <section class="workspace">
+        <section class="tab-panel is-active" id="wallPanel" aria-labelledby="wall">
+          <header class="workspace-header">
+            <div>
+              <p class="eyebrow">Collection</p>
+              <h2>Clawd 表情墙</h2>
+            </div>
+            <label class="search-box">
+              <span>搜索</span>
+              <input id="searchInput" type="search" placeholder="typing / happy / 睡觉 / 调试" autocomplete="off" />
+            </label>
+          </header>
+
+          <div class="filter-row" id="filterRow" aria-label="表情分类筛选"></div>
+          <div class="meme-grid" id="memeGrid" aria-live="polite"></div>
+        </section>
+
+        <section class="tab-panel" id="sourcesPanel" aria-labelledby="sources">
+          <header class="workspace-header">
+            <div>
+              <p class="eyebrow">Sources</p>
+              <h2>相关来源</h2>
+            </div>
+          </header>
+          <div class="source-grid" id="sourceGrid"></div>
+        </section>
+
+        <section class="tab-panel" id="packPanel" aria-labelledby="pack">
+          <header class="workspace-header">
+            <div>
+              <p class="eyebrow">Local pack</p>
+              <h2>我的包</h2>
+            </div>
+            <div class="header-actions">
+              <button class="ghost-action" type="button" id="copyPackBtn">复制清单</button>
+              <button class="ghost-action danger" type="button" id="clearPackBtn">清空</button>
+            </div>
+          </header>
+          <div class="pack-empty" id="packEmpty">
+            <img src="https://clawdmascot.com/public/images/clawd.png" alt="" />
+            <p>还没有收藏</p>
+          </div>
+          <div class="meme-grid" id="packGrid"></div>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
