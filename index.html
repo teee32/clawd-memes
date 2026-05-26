@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f5f1eb" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1f1e1d" media="(prefers-color-scheme: dark)" />
-    <title>Clawd 表情包聚合器</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <title id="docTitle">Clawd 表情包聚合器</title>
+    <link rel="stylesheet" href="./styles.css?v=9" />
     <script>
       (function () {
         try {
@@ -28,14 +28,20 @@
         <div class="brand-lockup">
           <img
             class="brand-crab"
+            id="brandImg"
             src="https://clawdmascot.com/public/images/clawd.png"
             alt=""
             aria-hidden="true"
           />
           <div>
-            <p class="eyebrow">Claude Code · Mascot</p>
-            <h1>Clawd 表情包聚合器</h1>
+            <p class="eyebrow" id="brandEyebrow">Claude Code · Mascot</p>
+            <h1 id="brandTitle">Clawd 表情包聚合器</h1>
           </div>
+        </div>
+
+        <div class="universe-switch" id="universeSwitch" role="tablist" aria-label="切换收录站">
+          <button class="universe-btn is-active" type="button" data-universe="clawd" role="tab" aria-selected="true">Clawd</button>
+          <button class="universe-btn" type="button" data-universe="codex" role="tab" aria-selected="false">Codex Pets</button>
         </div>
 
         <nav class="tabs" aria-label="主要区域">
@@ -72,8 +78,8 @@
         <section class="tab-panel is-active" id="wallPanel" aria-labelledby="wall">
           <header class="workspace-header">
             <div>
-              <p class="eyebrow">Collection</p>
-              <h2>Clawd 表情墙</h2>
+              <p class="eyebrow" id="wallEyebrow">Collection</p>
+              <h2 id="wallTitle">Clawd 表情墙</h2>
             </div>
             <label class="search-box">
               <span>搜索</span>
@@ -107,8 +113,8 @@
             </div>
           </header>
           <div class="pack-empty" id="packEmpty">
-            <img src="https://clawdmascot.com/public/images/clawd.png" alt="" />
-            <p>还没有收藏</p>
+            <img id="packEmptyImg" src="https://clawdmascot.com/public/images/clawd.png" alt="" />
+            <p id="packEmptyText">还没有收藏</p>
           </div>
           <div class="meme-grid" id="packGrid"></div>
         </section>
@@ -117,6 +123,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="./script.js"></script>
+    <script src="./script.js?v=2"></script>
   </body>
 </html>

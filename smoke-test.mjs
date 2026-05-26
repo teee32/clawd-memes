@@ -10,7 +10,7 @@ const profileDir = await mkdtemp(join(tmpdir(), "clawd-meme-smoke-"));
 const port = 9229 + Math.floor(Math.random() * 1000);
 const consoleErrors = [];
 
-const { expectedMemes, expectedSources } = await parseDataCounts(`${process.cwd()}/script.js`);
+const { expectedMemes, expectedSources, expectedCodexMemes, expectedCodexSources } = await parseDataCounts(`${process.cwd()}/script.js`);
 
 const chrome = spawn(chromePath, [
   "--headless=new",
@@ -78,6 +78,56 @@ try {
   const sourceCards = await evaluate(client, 'document.querySelectorAll("#sourceGrid .source-card").length');
   assert(sourceCards === expectedSources, `Expected ${expectedSources} source cards, found ${sourceCards}`);
 
+  await click(client, '[data-tab="wall"]');
+  await click(client, '[data-universe="codex"]');
+  const codexCards = await waitForTruthy(
+    client,
+    `document.querySelectorAll("#memeGrid .meme-card").length === ${expectedCodexMemes}`,
+  );
+  assert(codexCards, `Expected ${expectedCodexMemes} Codex cards after universe switch`);
+  const codexBrand = await evaluate(client, 'document.querySelector("#brandTitle").textContent');
+  assert(codexBrand.includes("Codex"), `Brand title did not update for Codex: ${codexBrand}`);
+  const codexFirstImageLoaded = await waitForTruthy(
+    client,
+    'document.querySelector("#memeGrid img")?.complete && document.querySelector("#memeGrid img")?.naturalWidth > 0',
+  );
+  assert(codexFirstImageLoaded, "First Codex pet preview did not load");
+  await click(client, '[data-tab="sources"]');
+  const codexSourceCards = await evaluate(client, 'document.querySelectorAll("#sourceGrid .source-card").length');
+  assert(
+    codexSourceCards === expectedCodexSources,
+    `Expected ${expectedCodexSources} Codex source cards, found ${codexSourceCards}`,
+  );
+  await click(client, '[data-universe="clawd"]');
+  const restoredCards = await waitForTruthy(
+    client,
+    `document.querySelectorAll("#memeGrid .meme-card").length === ${expectedMemes}`,
+  );
+  assert(restoredCards, "Switching back to Clawd did not restore Clawd memes");
+
+  await send(client, "Emulation.setDeviceMetricsOverride", {
+    width: 1366,
+    height: 900,
+    deviceScaleFactor: 1,
+    mobile: false,
+  });
+  await click(client, '[data-universe="codex"]');
+  await waitForTruthy(
+    client,
+    `document.querySelectorAll("#memeGrid .meme-card").length === ${expectedCodexMemes}`,
+  );
+  await waitForTruthy(
+    client,
+    'document.querySelector("#memeGrid img")?.complete && document.querySelector("#memeGrid img")?.naturalWidth > 0',
+  );
+  const codexShot = await send(client, "Page.captureScreenshot", { format: "png", fromSurface: true });
+  await writeFile("smoke-screenshot-codex.png", Buffer.from(codexShot.data, "base64"));
+  await click(client, '[data-universe="clawd"]');
+  await waitForTruthy(
+    client,
+    `document.querySelectorAll("#memeGrid .meme-card").length === ${expectedMemes}`,
+  );
+
   await send(client, "Emulation.setDeviceMetricsOverride", {
     width: 390,
     height: 844,
@@ -105,15 +155,20 @@ async function parseDataCounts(scriptPath) {
   const src = await readFile(scriptPath, "utf8");
   const memesMatch = src.match(/const memes\s*=\s*\[([\s\S]*?)\n\];/);
   const sourcesMatch = src.match(/const sources\s*=\s*\[([\s\S]*?)\n\];/);
-  if (!memesMatch || !sourcesMatch) {
-    throw new Error("Could not locate memes/sources arrays in script.js");
+  const codexSourcesMatch = src.match(/const codexSources\s*=\s*\[([\s\S]*?)\n\];/);
+  if (!memesMatch || !sourcesMatch || !codexSourcesMatch) {
+    throw new Error("Could not locate memes/sources/codexSources arrays in script.js");
   }
   const expectedMemes = (memesMatch[1].match(/^\s+id:\s*"/gm) || []).length;
   const expectedSources = (sourcesMatch[1].match(/^\s+title:\s*"/gm) || []).length;
-  if (!expectedMemes || !expectedSources) {
-    throw new Error(`Parsed zero entries (memes=${expectedMemes}, sources=${expectedSources})`);
+  const expectedCodexMemes = (src.match(/^\s+codexPet\(/gm) || []).length;
+  const expectedCodexSources = (codexSourcesMatch[1].match(/^\s+title:\s*"/gm) || []).length;
+  if (!expectedMemes || !expectedSources || !expectedCodexMemes || !expectedCodexSources) {
+    throw new Error(
+      `Parsed zero entries (memes=${expectedMemes}, sources=${expectedSources}, codexMemes=${expectedCodexMemes}, codexSources=${expectedCodexSources})`,
+    );
   }
-  return { expectedMemes, expectedSources };
+  return { expectedMemes, expectedSources, expectedCodexMemes, expectedCodexSources };
 }
 
 async function waitForEndpoint(targetPort) {

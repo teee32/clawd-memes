@@ -137,6 +137,53 @@ a {
   image-rendering: pixelated;
 }
 
+.universe-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+}
+
+.universe-btn {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: calc(var(--radius-sm) - 2px);
+  background: transparent;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.universe-btn:hover,
+.universe-btn:focus-visible {
+  color: var(--ink);
+  outline: none;
+}
+
+.universe-btn.is-active {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+  box-shadow:
+    0 1px 2px rgba(20, 20, 19, 0.06),
+    0 4px 10px rgba(20, 20, 19, 0.04);
+}
+
+:root[data-theme="dark"] .universe-btn.is-active {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
 .eyebrow {
   margin: 0 0 6px;
   color: var(--accent-strong);
@@ -418,8 +465,8 @@ input:focus {
 
 .meme-media img {
   display: block;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 62%;
+  max-height: 62%;
   object-fit: contain;
   image-rendering: pixelated;
 }

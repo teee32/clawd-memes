@@ -754,15 +754,167 @@ const memes = [
   },
 ];
 
+const codexCategories = ["全部", "AI·Tech", "动漫", "IP经典", "Meme"];
+
+const codexSources = [
+  {
+    title: "codex-pet.com",
+    url: "https://codex-pet.com",
+    summary: "社区驱动的 Codex 桌宠聚合站,收录 606+ 桌宠,支持 npx 一键安装。",
+  },
+  {
+    title: "awesome-codex-pet",
+    url: "https://github.com/legeling/awesome-codex-pet",
+    summary: "精选 Codex 桌宠画廊,提供动画预览和标准化安装,附 Web 画廊 awesome-codex-pet.pages.dev。",
+  },
+  {
+    title: "OpenPets",
+    url: "https://github.com/alterhq/openpets",
+    summary: "macOS 原生桌宠应用,MCP/CLI 控制,定义了 Codex Pets 的 spritesheet 格式。",
+  },
+  {
+    title: "openai/codex",
+    url: "https://github.com/openai/codex",
+    summary: "OpenAI 官方 Codex CLI 仓库,桌宠生态的源头。",
+  },
+];
+
+function codexPet(slug, title, cat, tags, note) {
+  return {
+    id: `codex-${slug}`,
+    title,
+    category: cat,
+    kind: "WebP",
+    preview: `https://github.com/BeiXiao/awesome-codex-pets/raw/main/pets/${slug}/thumb.webp`,
+    url: `https://codex-pet.com/pets/${slug}`,
+    source: "codex-pet.com",
+    sourceUrl: "https://codex-pet.com",
+    tags,
+    note,
+  };
+}
+
+const codexMemes = [
+  codexPet("codex", "Codex", "AI·Tech", ["Codex", "terminal", "logo"], "金色徽章里嵌一个终端提示符,Codex CLI 的图腾。"),
+  codexPet("clawdex", "Clawdex", "AI·Tech", ["Clawd", "hacker", "跨界"], "穿连帽衫戴墨镜抱笔记本的 Clawd,Codex 生态里的 Anthropic 跨界。"),
+  codexPet("claude-crab", "Claude Crab", "AI·Tech", ["Clawd", "像素", "crab"], "橙色像素小蟹,Clawd 在 Codex 生态的致敬版。"),
+  codexPet("clawd-2", "Clawd 2", "AI·Tech", ["Clawd", "invader", "pixel"], "Space Invader 风格的橙色像素蟹。"),
+  codexPet("froge-openai-mascot", "Froge", "AI·Tech", ["OpenAI", "frog", "mascot"], "戴红 fez 帽的小青蛙,社区非官方的 OpenAI 吉祥物。"),
+  codexPet("clippy", "Clippy", "AI·Tech", ["Microsoft", "回形针", "经典"], "微软经典回形针助手,AI 助手的精神祖先。"),
+  codexPet("cool-clippy", "Cool Clippy", "AI·Tech", ["Microsoft", "墨镜", "回形针"], "戴墨镜的酷版回形针。"),
+  codexPet("cortana", "Cortana", "AI·Tech", ["Microsoft", "AI", "蓝色"], "微软 AI 助手 Cortana 的像素化身。"),
+  codexPet("hal-9000", "HAL 9000", "AI·Tech", ["2001", "AI", "红眼"], "「I'm sorry, Dave.」经典 AI 反派。"),
+  codexPet("codie", "Codie", "AI·Tech", ["魔法书", "codex", "原创"], "长了脚的魔法典籍,Codex 字面意义上的化身。"),
+  codexPet("gopher", "Go Gopher", "AI·Tech", ["Go", "语言", "吉祥物"], "Go 语言的蓝色囊地鼠吉祥物。"),
+  codexPet("java", "Java Duke", "AI·Tech", ["Java", "语言", "Duke"], "Java 的三角头吉祥物 Duke。"),
+  codexPet("tuxterm", "Tux", "AI·Tech", ["Linux", "企鹅", "开源"], "Linux 企鹅 Tux 的终端版桌宠。"),
+  codexPet("bonzibuddy", "BonziBuddy", "AI·Tech", ["恶搞", "经典", "猩猩"], "千禧年经典「助手」软件的紫色大猩猩。"),
+  codexPet("navi", "Navi", "AI·Tech", ["Zelda", "精灵", "Hey Listen"], "「Hey! Listen!」塞尔达的碎碎念小精灵。"),
+  codexPet("terminal", "Terminal", "AI·Tech", ["terminal", "命令行", "极客"], "拟人化的终端窗口桌宠。"),
+  codexPet("macintosh", "Macintosh", "AI·Tech", ["Apple", "复古", "经典"], "初代 Macintosh 拟人版。"),
+  codexPet("stackbleed-codex-pet", "Stackbleed", "AI·Tech", ["栈溢出", "geek", "梗"], "「栈溢出」桌宠版,程序员专属梗。"),
+  codexPet("frieren-3", "Frieren", "动漫", ["葬送的芙莉莲", "精灵", "魔法"], "不老精灵芙莉莲,百年后依然不急不慢。"),
+  codexPet("gojo", "Gojo", "动漫", ["咒术回战", "五条悟", "最强"], "五条悟,「大丈夫,僕最強だから。」"),
+  codexPet("naruto", "Naruto", "动漫", ["火影忍者", "鸣人", "忍者"], "漩涡鸣人,永不放弃的忍道。"),
+  codexPet("luffy", "Luffy", "动漫", ["海贼王", "草帽", "橡胶"], "草帽路飞,要成为海贼王的男人。"),
+  codexPet("zoro", "Zoro", "动漫", ["海贼王", "剑豪", "迷路"], "索隆,三刀流但永远在迷路。"),
+  codexPet("nezuko", "Nezuko", "动漫", ["鬼灭之刃", "祢豆子", "竹筒"], "嘴咬竹筒的祢豆子。"),
+  codexPet("sukuna", "Sukuna", "动漫", ["咒术回战", "宿傩", "两面四臂"], "两面四臂的咒术之王宿傩。"),
+  codexPet("itachi", "Itachi", "动漫", ["火影忍者", "鼬", "万花筒"], "宇智波鼬,永远的兄长。"),
+  codexPet("pochita", "Pochita", "动漫", ["电锯人", "电锯狗", "可爱"], "电锯人的小狗形态,头顶拉绳。"),
+  codexPet("doraemon", "Doraemon", "动漫", ["机器猫", "四次元", "铜锣烧"], "来自未来的蓝胖子,什么道具都有。"),
+  codexPet("shinchan", "Shin-chan", "动漫", ["蜡笔小新", "屁屁", "幼稚园"], "蜡笔小新,五岁的成年人发言机器。"),
+  codexPet("kirby", "Kirby", "动漫", ["星之卡比", "粉色", "吸"], "粉色圆球,什么都能吸进去。"),
+  codexPet("chiikawa", "Chiikawa", "动漫", ["吉伊卡哇", "小可爱", "打工"], "「哇……」一边卖萌一边打工。"),
+  codexPet("cinnamonroll", "Cinnamonroll", "动漫", ["三丽鸥", "肉桂狗", "卷耳"], "三丽鸥大耳狗,耳朵卷得像肉桂卷。"),
+  codexPet("kuromi", "Kuromi", "动漫", ["三丽鸥", "库洛米", "朋克"], "三丽鸥的朋克兔,美乐蒂的对手。"),
+  codexPet("agumon", "Agumon", "动漫", ["数码宝贝", "亚古兽", "火焰"], "数码宝贝初代搭档亚古兽。"),
+  codexPet("gabumon", "Gabumon", "动漫", ["数码宝贝", "加布兽", "皮毛"], "数码宝贝初代搭档加布兽。"),
+  codexPet("piyomon", "Piyomon", "动漫", ["数码宝贝", "比丘兽", "粉色"], "数码宝贝初代搭档比丘兽。"),
+  codexPet("wukong", "Wukong", "动漫", ["悟空", "西游", "金箍棒"], "齐天大圣孙悟空,筋斗云走起。"),
+  codexPet("sora", "Sora", "动漫", ["王国之心", "键刃", "迪士尼"], "拿着键刃的少年,迪士尼 × 最终幻想。"),
+  codexPet("vault-boy", "Vault Boy", "IP经典", ["Fallout", "废土", "竖拇指"], "Fallout 的竖拇指小子,废土求生指南。"),
+  codexPet("wall-e", "WALL-E", "IP经典", ["Pixar", "机器人", "环保"], "皮克斯的垃圾清理小机器人。"),
+  codexPet("wall-e-baby", "Baby WALL-E", "IP经典", ["Pixar", "迷你", "机器人"], "迷你版 WALL-E,更软更萌。"),
+  codexPet("snoopy", "Snoopy", "IP经典", ["Peanuts", "小猎犬", "花生漫画"], "查理布朗的小猎犬 Snoopy。"),
+  codexPet("r2-vader", "R2-Vader", "IP经典", ["Star Wars", "R2D2", "黑武士"], "当 R2-D2 穿上达斯·维达的盔甲。"),
+  codexPet("pickle-rick", "Pickle Rick", "IP经典", ["Rick and Morty", "腌黄瓜", "科学"], "「I'm Pickle Rick!」"),
+  codexPet("totoro", "Totoro", "IP经典", ["龙猫", "吉卜力", "森林"], "宫崎骏的森林精灵龙猫。"),
+  codexPet("crash-bandicoot", "Crash", "IP经典", ["Crash", "袋狼", "旋转"], "袋狼大进击,旋转就对了。"),
+  codexPet("spyro", "Spyro", "IP经典", ["Spyro", "小龙", "紫色"], "紫色小飞龙,喷火拯救世界。"),
+  codexPet("ada-lovelace", "Ada Lovelace", "IP经典", ["程序员", "先驱", "维多利亚"], "世界第一位程序员,算法女王。"),
+  codexPet("einstein", "Einstein", "IP经典", ["物理学家", "相对论", "天才"], "爱因斯坦,E=mc² 的那位。"),
+  codexPet("confucius", "Confucius", "IP经典", ["孔子", "儒家", "圣人"], "孔夫子,「学而时习之」。"),
+  codexPet("laozi", "Laozi", "IP经典", ["老子", "道德经", "无为"], "老子,「道可道,非常道」。"),
+  codexPet("plato", "Plato", "IP经典", ["柏拉图", "哲学", "希腊"], "理想国的作者,西方哲学之祖。"),
+  codexPet("pepe", "Pepe", "Meme", ["青蛙", "meme", "feels"], "Feels good man / Feels bad man。"),
+  codexPet("apu-apustaja", "Apu Apustaja", "Meme", ["helper", "fren", "wholesome"], "「fren」系 meme,呆萌小蛙。"),
+  codexPet("wojak", "Wojak", "Meme", ["feels", "表情", "互联网"], "互联网情绪的化身,万用表情模板。"),
+  codexPet("lulu", "Lulu", "Meme", ["原创", "圆润", "黄色"], "圆滚滚的黄色小家伙,社区原创。"),
+  codexPet("lulu-capybara", "Capybara Lulu", "Meme", ["水豚", "呆萌", "佛系"], "水豚版 Lulu,什么都无所谓。"),
+  codexPet("bubu", "Bubu", "Meme", ["原创", "粉色", "可爱"], "粉嘟嘟的 Bubu,社区人气桌宠。"),
+  codexPet("huangdou", "黄豆", "Meme", ["黄豆", "表情", "中文圈"], "黄豆表情包系列,中文 meme 圈常客。"),
+  codexPet("ditta", "Ditta", "Meme", ["原创", "像素", "桌宠"], "社区原创像素桌宠 Ditta。"),
+];
+
+const universes = {
+  clawd: {
+    label: "Clawd",
+    docTitle: "Clawd 表情包聚合器",
+    brandTitle: "Clawd 表情包聚合器",
+    brandEyebrow: "Claude Code · Mascot",
+    wallTitle: "Clawd 表情墙",
+    wallEyebrow: "Collection",
+    brandImg: `${publicAssets}/images/clawd.png`,
+    emptyImg: `${publicAssets}/images/clawd.png`,
+    emptyText: "还没有收藏",
+    searchPlaceholder: "typing / happy / 睡觉 / 调试",
+    categories,
+    sources,
+    memes,
+    packKey: "clawdMemePack",
+  },
+  codex: {
+    label: "Codex Pets",
+    docTitle: "Codex 桌宠聚合器",
+    brandTitle: "Codex 桌宠聚合器",
+    brandEyebrow: "OpenAI · Codex CLI Pets",
+    wallTitle: "Codex 桌宠墙",
+    wallEyebrow: "Pet Ecosystem",
+    brandImg: "https://github.com/BeiXiao/awesome-codex-pets/raw/main/pets/codex/thumb.webp",
+    emptyImg: "https://github.com/BeiXiao/awesome-codex-pets/raw/main/pets/codex/thumb.webp",
+    emptyText: "还没有收藏",
+    searchPlaceholder: "codex / clippy / 龙猫 / pepe",
+    categories: codexCategories,
+    sources: codexSources,
+    memes: codexMemes,
+    packKey: "codexPetPack",
+  },
+};
+
+function activeUniverse() {
+  return universes[state.universe] || universes.clawd;
+}
+
 const state = {
+  universe: (function () {
+    try {
+      const saved = localStorage.getItem("clawdUniverse");
+      return saved && universes[saved] ? saved : "clawd";
+    } catch {
+      return "clawd";
+    }
+  })(),
   tab: "wall",
   category: "全部",
   query: "",
-  pack: loadPack(),
+  pack: [],
 };
+state.pack = loadPack();
 
 const elements = {
   tabButtons: [...document.querySelectorAll(".tab-button")],
+  universeButtons: [...document.querySelectorAll(".universe-btn")],
   panels: {
     wall: document.querySelector("#wallPanel"),
     sources: document.querySelector("#sourcesPanel"),
@@ -781,6 +933,14 @@ const elements = {
   themeToggle: document.querySelector("#themeToggle"),
   themeToggleLabel: document.querySelector("#themeToggleLabel"),
   themeIcon: document.querySelector("#themeToggle .theme-icon"),
+  docTitle: document.querySelector("#docTitle"),
+  brandImg: document.querySelector("#brandImg"),
+  brandTitle: document.querySelector("#brandTitle"),
+  brandEyebrow: document.querySelector("#brandEyebrow"),
+  wallTitle: document.querySelector("#wallTitle"),
+  wallEyebrow: document.querySelector("#wallEyebrow"),
+  packEmptyImg: document.querySelector("#packEmptyImg"),
+  packEmptyText: document.querySelector("#packEmptyText"),
 };
 
 const sunIcon =
@@ -792,6 +952,7 @@ const moonIcon =
 init();
 
 function init() {
+  syncBrand();
   renderFilters();
   renderMemeGrid();
   renderSources();
@@ -799,6 +960,9 @@ function init() {
 
   elements.tabButtons.forEach((button) => {
     button.addEventListener("click", () => setTab(button.dataset.tab));
+  });
+  elements.universeButtons.forEach((button) => {
+    button.addEventListener("click", () => switchUniverse(button.dataset.universe));
   });
   elements.searchInput.addEventListener("input", (event) => {
     state.query = event.target.value.trim().toLowerCase();
@@ -809,6 +973,43 @@ function init() {
 
   syncThemeButton();
   elements.themeToggle.addEventListener("click", toggleTheme);
+}
+
+function switchUniverse(name) {
+  if (!universes[name] || name === state.universe) return;
+  state.universe = name;
+  state.category = "全部";
+  state.query = "";
+  if (elements.searchInput) elements.searchInput.value = "";
+  state.pack = loadPack();
+  try {
+    localStorage.setItem("clawdUniverse", name);
+  } catch {}
+  syncBrand();
+  renderFilters();
+  renderMemeGrid();
+  renderSources();
+  renderPack();
+  setTab("wall");
+}
+
+function syncBrand() {
+  const u = activeUniverse();
+  elements.docTitle.textContent = u.docTitle;
+  document.title = u.docTitle;
+  elements.brandImg.src = u.brandImg;
+  elements.brandTitle.textContent = u.brandTitle;
+  elements.brandEyebrow.textContent = u.brandEyebrow;
+  elements.wallTitle.textContent = u.wallTitle;
+  elements.wallEyebrow.textContent = u.wallEyebrow;
+  elements.packEmptyImg.src = u.emptyImg;
+  elements.packEmptyText.textContent = u.emptyText;
+  elements.searchInput.placeholder = u.searchPlaceholder;
+  elements.universeButtons.forEach((btn) => {
+    const active = btn.dataset.universe === state.universe;
+    btn.classList.toggle("is-active", active);
+    btn.setAttribute("aria-selected", String(active));
+  });
 }
 
 function syncThemeButton() {
@@ -844,7 +1045,7 @@ function setTab(tab) {
 
 function renderFilters() {
   elements.filterRow.innerHTML = "";
-  categories.forEach((category) => {
+  activeUniverse().categories.forEach((category) => {
     const button = document.createElement("button");
     button.className = "chip";
     button.type = "button";
@@ -860,7 +1061,7 @@ function renderFilters() {
 }
 
 function renderMemeGrid() {
-  const filtered = memes.filter((meme) => {
+  const filtered = activeUniverse().memes.filter((meme) => {
     const inCategory = state.category === "全部" || meme.category === state.category;
     const haystack = [meme.title, meme.kind, meme.category, meme.source, meme.note, ...meme.tags].join(" ").toLowerCase();
     return inCategory && (!state.query || haystack.includes(state.query));
@@ -945,7 +1146,7 @@ function createMemeCard(meme, source) {
 
 function renderSources() {
   elements.sourceGrid.innerHTML = "";
-  sources.forEach((source) => {
+  activeUniverse().sources.forEach((source) => {
     const article = document.createElement("article");
     article.className = "source-card";
     article.innerHTML = `
@@ -1014,14 +1215,14 @@ function copyText(value) {
 
 function loadPack() {
   try {
-    return JSON.parse(localStorage.getItem("clawdMemePack") || "[]");
+    return JSON.parse(localStorage.getItem(activeUniverse().packKey) || "[]");
   } catch {
     return [];
   }
 }
 
 function savePack() {
-  localStorage.setItem("clawdMemePack", JSON.stringify(state.pack));
+  localStorage.setItem(activeUniverse().packKey, JSON.stringify(state.pack));
 }
 
 function showToast(message) {
